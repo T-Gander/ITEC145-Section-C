@@ -7,17 +7,18 @@ namespace ITEC145__Section_C__
     {
         List<string> strings = new List<string>();
         OpenFileDialog ofd = new OpenFileDialog();
-        const int STRINGSPLITCOUNT = 6;
+        const int COLUMNS = 6;                         //Constant for amount of columns in my datagrid. And how to sort data.
 
         public Form1()
         {
             InitializeComponent();
+            
         }
 
         private void btnLoad_Click(object sender, EventArgs e)
         {
             try
-            {
+            {                                                   //Thought I'd try splitting the data before adding to list.
                 int count = 0;
                 ofd.ShowDialog();     
                 
@@ -28,52 +29,71 @@ namespace ITEC145__Section_C__
                 while(!Reader.EndOfStream)
                 {
                     string x = Reader.ReadLine();
-                    strings.AddRange(x.Split(", "));    //The regular .Add() function doesn't work for substrings, so addrange must be used
+                    strings.AddRange(x.Split(", "));    //The regular .Add() function doesn't work for arrays, so .AddRange must be used
                     count++;
-                }
+                }   
 
-                txtRead.Text = $"{count} Lines added to List";
+
+
+
+
+                txtRead.Text = $"{count*COLUMNS} Strings added to List";       
             }
             catch(Exception ex)
             {
-                MessageBox.Show(ex.Message);            //Shows exception message
+                MessageBox.Show(ex.Message);            //Shows exception message to help with debug
             }
         }
 
-        private void AddRow()
+        private void AddRow()                           //Method to work out the amount of rows needed in datagrid
         {
-            double rowsNeeded = strings.Count / STRINGSPLITCOUNT;
+            double rowsNeeded = strings.Count / COLUMNS;           //Amount of strings diveded by the amount of columns
 
             for(int i = 0; i < rowsNeeded; i++)
             {
-                dataGridView1.Rows.Add();
+                dataGridView1.Rows.Add();       //How to add a new row to a datagrid.
             }
 
+        }
+
+        private int LoadToGrid(ref int count)
+        {
+            dataGridView1.Rows.Clear();         //Clears datasheet
+            AddRow();                           //Method to add rows needed executes
+
+            count = 0;
+            int r = 0;          //To keep track of a cells Row integer 
+            int c = 0;          //To keep track of a cells Column integer
+
+            for (int i = 0; i < strings.Count; i++)
+            {
+                dataGridView1.CurrentCell = dataGridView1.Rows[r].Cells[c]; //How to select a specific cell in a datagrid
+                dataGridView1.CurrentCell.Value = strings[i];               //Adds the string in list index
+                c++;                                                        //After entering data, move to next column
+
+                if (c == COLUMNS)                                   //If current column equals the total amount of columns
+                {
+                    c = 0;                                          //Columns reset
+                    r++;                                            //move to next row
+                }
+                count++;
+            }
+            return count;
         }
 
         private void btnToGrid_Click(object sender, EventArgs e)
         {
-            AddRow();
-
             int count = 0;
-            int r = 0;          //Row integer 
-            int c = 0;          //Column integer
 
-                for(int i = 0; i < strings.Count; i++)
-                {
-                    dataGridView1.CurrentCell = dataGridView1.Rows[r].Cells[c];
-                    dataGridView1.CurrentCell.Value = strings[i];
-                    c++;
-
-                    if(c == STRINGSPLITCOUNT)
-                    {
-                        c = 0;
-                        r++;
-                    }
-                    count++;
-                }
+            LoadToGrid(ref count);
+            
             txtCopy.Text = $"{count} Strings loaded to Datagrid";
-            dataGridView1.Refresh();
+            //dataGridView1.Refresh();                                    //Refreshes datasheet, doesnt seem to be needed
+
+
+
+            //Partial Code for reassembling the strings
+            //but I felt like I was cheating so did above instead.
 
             //string finalString = "";
             //int stringPart = 0;
@@ -83,11 +103,11 @@ namespace ITEC145__Section_C__
 
             //for(int i = 0; i < strings.Count; i++)
             //{
-            //    strings[stringPart] += finalString;
+            //    strings[stringPart] += finalString;       //Concatenating each string based on array index
 
             //    if (stringPart == STRINGSPLITCOUNT)
             //    {
-            //        stringPart = 0;
+            //        stringPart = 0;                       //Once all strings in a row have been entered, start again.
             //    }
 
             //    stringPart++;
