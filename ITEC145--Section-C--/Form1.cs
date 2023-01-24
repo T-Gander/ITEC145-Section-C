@@ -7,7 +7,7 @@ namespace ITEC145__Section_C__
         List<string> strings = new List<string>();
         OpenFileDialog ofd = new OpenFileDialog();
         const int COLUMNS = 6;                         //Constant for amount of columns in my datagrid. And how to sort data.
-        List<string> delStrings = new List<string>();
+        
 
         int rowCount = 0;
         public Form1()
@@ -33,7 +33,8 @@ namespace ITEC145__Section_C__
                     strings.AddRange(x.Split(", "));    //The regular .Add() function doesn't work for arrays, so .AddRange must be used, took awhile to figure this out...
                     count++;
                 }  
-                txtRead.Text = $"{count*COLUMNS} Records added to List";       
+                txtRead.Text = $"{count} file records added to List"; 
+                Reader.Close();
             }
             catch(Exception ex)
             {
@@ -54,6 +55,8 @@ namespace ITEC145__Section_C__
 
         private int LoadToGrid(ref int rowCount, ref int count)
         {
+            rowCount = dataGridView1.RowCount-1;
+
             //dataGridView1.Rows.Clear();         //Clears datasheet
             AddRow();                           //Method to add rows needed executes
 
@@ -98,7 +101,7 @@ namespace ITEC145__Section_C__
                     count++;
                 }
 
-                rowCount = r;
+                rowCount = r;                                           //Sets rowCount to r so that rowCount can be used when this function
                 return count;
             }
         }
@@ -190,11 +193,11 @@ namespace ITEC145__Section_C__
             dataGridView1.Rows.Clear();
             LoadToGrid(ref rowCount, ref count);    //refills datagrid
             Writer.Close();
-            MessageBox.Show($"Saved {count} records to file newnamelog.txt");
+            MessageBox.Show($"Saved {count} strings ({count / COLUMNS} records) to file newnamelog.txt in program directory");
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message);       //Will likely never get here and may be redundant
             }
         }
 
@@ -202,6 +205,15 @@ namespace ITEC145__Section_C__
         {
             try
             {
+                if (dataGridView1.SelectedCells.Count < 6)
+                {
+                    MessageBox.Show("Please select a row!");
+                }
+                else if(dataGridView1.RowCount == 0)
+                {
+                    MessageBox.Show("There are no rows to delete!");
+                }
+
                 foreach (DataGridViewRow values in dataGridView1.SelectedRows)
                 {
                     dataGridView1.Rows.Remove(values);
@@ -210,14 +222,15 @@ namespace ITEC145__Section_C__
             }
             catch
             {
-                rowCount = 0;       //If someone tries to get row count to negatives, this stops it.
+                rowCount = 0;       //If someone tries to get row count to negatives, this stops it. May be redundant.
                 MessageBox.Show("There are no rows to delete!");
             }
         }
 
         private void btnClearList_Click(object sender, EventArgs e)
         {
-            strings.Clear();       
+            strings.Clear();
+            txtCopy.Text = $" You have 0 Records in the list array!";
         }
 
         private void btnClearDatagrid_Click(object sender, EventArgs e)

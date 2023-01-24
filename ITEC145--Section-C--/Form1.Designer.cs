@@ -82,6 +82,7 @@
             // 
             // dataGridView1
             // 
+            this.dataGridView1.AllowUserToDeleteRows = false;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.FirstName,
@@ -154,7 +155,7 @@
             this.btnClearList.Name = "btnClearList";
             this.btnClearList.Size = new System.Drawing.Size(100, 48);
             this.btnClearList.TabIndex = 7;
-            this.btnClearList.Text = "Clear Current List";
+            this.btnClearList.Text = "Clear Current List Array";
             this.btnClearList.UseVisualStyleBackColor = true;
             this.btnClearList.Click += new System.EventHandler(this.btnClearList_Click);
             // 
