@@ -39,6 +39,10 @@
             this.City = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Province = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Postcode = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.btnDeleteRow = new System.Windows.Forms.Button();
+            this.btnSaveDatagrid = new System.Windows.Forms.Button();
+            this.btnClearList = new System.Windows.Forms.Button();
+            this.btnClearDatagrid = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -86,11 +90,12 @@
             this.City,
             this.Province,
             this.Postcode});
-            this.dataGridView1.Location = new System.Drawing.Point(12, 130);
+            this.dataGridView1.Location = new System.Drawing.Point(129, 130);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 25;
-            this.dataGridView1.Size = new System.Drawing.Size(539, 192);
+            this.dataGridView1.Size = new System.Drawing.Size(539, 224);
             this.dataGridView1.TabIndex = 4;
+            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
             // FirstName
             // 
@@ -123,11 +128,55 @@
             this.Postcode.HeaderText = "Postcode";
             this.Postcode.Name = "Postcode";
             // 
+            // btnDeleteRow
+            // 
+            this.btnDeleteRow.Location = new System.Drawing.Point(23, 130);
+            this.btnDeleteRow.Name = "btnDeleteRow";
+            this.btnDeleteRow.Size = new System.Drawing.Size(100, 48);
+            this.btnDeleteRow.TabIndex = 5;
+            this.btnDeleteRow.Text = "Delete Row";
+            this.btnDeleteRow.UseVisualStyleBackColor = true;
+            this.btnDeleteRow.Click += new System.EventHandler(this.btnDeleteRow_Click);
+            // 
+            // btnSaveDatagrid
+            // 
+            this.btnSaveDatagrid.Location = new System.Drawing.Point(23, 184);
+            this.btnSaveDatagrid.Name = "btnSaveDatagrid";
+            this.btnSaveDatagrid.Size = new System.Drawing.Size(100, 48);
+            this.btnSaveDatagrid.TabIndex = 6;
+            this.btnSaveDatagrid.Text = "Save Datagrid";
+            this.btnSaveDatagrid.UseVisualStyleBackColor = true;
+            this.btnSaveDatagrid.Click += new System.EventHandler(this.btnSaveDatagrid_Click);
+            // 
+            // btnClearList
+            // 
+            this.btnClearList.Location = new System.Drawing.Point(23, 238);
+            this.btnClearList.Name = "btnClearList";
+            this.btnClearList.Size = new System.Drawing.Size(100, 48);
+            this.btnClearList.TabIndex = 7;
+            this.btnClearList.Text = "Clear Current List";
+            this.btnClearList.UseVisualStyleBackColor = true;
+            this.btnClearList.Click += new System.EventHandler(this.btnClearList_Click);
+            // 
+            // btnClearDatagrid
+            // 
+            this.btnClearDatagrid.Location = new System.Drawing.Point(23, 292);
+            this.btnClearDatagrid.Name = "btnClearDatagrid";
+            this.btnClearDatagrid.Size = new System.Drawing.Size(100, 48);
+            this.btnClearDatagrid.TabIndex = 8;
+            this.btnClearDatagrid.Text = "Empty Datagrid";
+            this.btnClearDatagrid.UseVisualStyleBackColor = true;
+            this.btnClearDatagrid.Click += new System.EventHandler(this.btnClearDatagrid_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.btnClearDatagrid);
+            this.Controls.Add(this.btnClearList);
+            this.Controls.Add(this.btnSaveDatagrid);
+            this.Controls.Add(this.btnDeleteRow);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.txtCopy);
             this.Controls.Add(this.txtRead);
@@ -135,6 +184,7 @@
             this.Controls.Add(this.btnLoad);
             this.Name = "Form1";
             this.Text = "Loading Lists Form";
+            this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -154,5 +204,9 @@
         private DataGridViewTextBoxColumn City;
         private DataGridViewTextBoxColumn Province;
         private DataGridViewTextBoxColumn Postcode;
+        private Button btnDeleteRow;
+        private Button btnSaveDatagrid;
+        private Button btnClearList;
+        private Button btnClearDatagrid;
     }
 }
